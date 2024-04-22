@@ -15,7 +15,7 @@ public class StoreProductPage {
     By quantityIncreaseBtn = By.cssSelector(".touchspin-up");
     By quantityDecreaseBtn = By.cssSelector(".touchspin-down");
     By addToCartBtn = By.cssSelector("[data-button-action]");
-    By homepageLink = By.xpath("//span[@innertext='Home']");
+    By homepageLink = By.cssSelector("ol li:nth-of-type(1) span");
 
     public WebElement getSizeOption(){
         return driver.findElement(sizeOption);
