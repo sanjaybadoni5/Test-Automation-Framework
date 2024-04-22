@@ -74,7 +74,7 @@ public class OrderCompleteTest extends BasePage {
         paymentForm.getTermsConditionsCheckbox().click();
         paymentForm.getOrderBtn().click();
 
-        Thread.sleep(5000);
-        System.out.println("Order complete test has been simulated successfully.");
+        System.out.println("OrderComplete test has been simulated successfully.");
+        //Thread.sleep(5000);
     }
 }
