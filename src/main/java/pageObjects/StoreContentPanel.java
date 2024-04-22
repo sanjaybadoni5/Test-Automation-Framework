@@ -11,8 +11,8 @@ public class StoreContentPanel {
         this.driver = driver;
     }
 
-    By continueShoppingBtn = By.xpath("//button[@innertext='Continue shopping']");
-    By proceedToCheckoutBtn = By.xpath("//a[@innertext='Proceed to checkout']");
+    By continueShoppingBtn = By.cssSelector(".cart-content-btn [data-dismiss]");
+    By proceedToCheckoutBtn = By.cssSelector(".modal-body .btn.btn-primary");
 
     public WebElement getContinueShoppingBtn(){
         return driver.findElement(continueShoppingBtn);
