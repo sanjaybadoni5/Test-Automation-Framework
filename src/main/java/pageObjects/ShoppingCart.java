@@ -15,10 +15,11 @@ public class ShoppingCart {
     By promoTextbox = By.cssSelector("input[name='discount_name']");
     By addPromoBtn = By.cssSelector("form[method='post']  span");
     By closePromo = By.linkText("Close");
-    By removeItemBtn = By.cssSelector(".remove-from-cart > .float-xs-left.material-icons");
     By proceedToCheckoutBtn = By.linkText("PROCEED TO CHECKOUT");
     By quantityIncreaseBtn = By.cssSelector(".touchspin-up");
     By quantityDecreaseBtn = By.cssSelector(".touchspin-down");
+    By totalAmountVal = By.cssSelector(".cart-total .value");
+    String removeItemBtn = "(//a[@class='remove-from-cart'])[%d]";
 
     public WebElement getHavePromo(){
         return driver.findElement(havePromo);
@@ -32,9 +33,6 @@ public class ShoppingCart {
     public WebElement getClosePromo(){
         return driver.findElement(closePromo);
     }
-    public WebElement getRemoveItemBtn(){
-        return driver.findElement(removeItemBtn);
-    }
     public WebElement getProceedToCheckoutBtn(){
         return driver.findElement(proceedToCheckoutBtn);
     }
@@ -43,5 +41,10 @@ public class ShoppingCart {
     }
     public WebElement getQuantityDecreaseBtn(){
         return driver.findElement(quantityDecreaseBtn);
+    }
+    public WebElement getTotalAmountValue() { return driver.findElement(totalAmountVal); }
+    public WebElement getRemoveItemBtn(int itemNumber) {
+        String xpathExpression = String.format(removeItemBtn, itemNumber);
+        return driver.findElement(By.xpath(xpathExpression));
     }
 }
