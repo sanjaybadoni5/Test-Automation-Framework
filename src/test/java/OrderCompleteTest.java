@@ -1,5 +1,6 @@
 import base.BasePage;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -73,6 +74,9 @@ public class OrderCompleteTest extends BasePage {
         paymentForm.getPayByCheckRadioBtn().click();
         paymentForm.getTermsConditionsCheckbox().click();
         paymentForm.getOrderBtn().click();
+
+        OrderConfirm confirmPage = new OrderConfirm(driver);
+        Assert.assertEquals(sCart.getTotalAmountValue().getText(), confirmPage.getPaymentAmount().getText());
 
         System.out.println("OrderComplete test has been simulated successfully.");
         //Thread.sleep(5000);
