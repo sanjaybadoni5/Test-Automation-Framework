@@ -1,8 +1,8 @@
-Testing a dummy webstore page.
+# Testing a dummy webstore page.
 
-Tools used in this project:
+__Tools used in this project:__
 - Java
 - Selenium
 - TestNG
 - Maven
-- tbc?
+- Jenkins
