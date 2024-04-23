@@ -3,10 +3,13 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pageObjects.*;
 
 import java.io.IOException;
+
+@Listeners(resources.Listeners.class)
 
 public class OrderCompleteTest extends BasePage {
     public OrderCompleteTest() throws IOException {
