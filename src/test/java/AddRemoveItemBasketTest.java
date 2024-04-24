@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.time.Duration;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -39,6 +40,15 @@ public class AddRemoveItemBasketTest extends BasePage{
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         home.getCookie().click();
+
+        if (home.getSidebar().getAttribute("class").contains("inactive")){
+            home.getToggle().click();
+        }
+
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        jse.executeScript("arguments[0].scrollIntoView()", home.getTestStoreLink());
+
+        wait.until(ExpectedConditions.elementToBeClickable(home.getTestStoreLink()));
         home.getTestStoreLink().click();
 
         StoreHomepage storeHome = new StoreHomepage(driver);
