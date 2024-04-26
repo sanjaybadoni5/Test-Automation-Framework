@@ -15,8 +15,17 @@
 					<release>17</release>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<suiteXmlFiles>
+						<suiteXmlFile>Testng.xml</suiteXmlFile>
+					</suiteXmlFiles>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+
 	<dependencies>
 		<!--
 		https://mvnrepository.com/artifact/com.github.lambdatest/lambdatest-tunnel-binary -->
@@ -31,7 +40,7 @@
 			<artifactId>selenium-java</artifactId>
 			<version>4.20.0</version>
 		</dependency>
-	
+
 
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-nop -->
 		<dependency>
@@ -52,14 +61,6 @@
 			<artifactId>lambdatest-tunnel-binary</artifactId>
 			<version>1.0.4</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.testng/testng -->
-<dependency>
-    <groupId>org.testng</groupId>
-    <artifactId>testng</artifactId>
-    <version>7.9.0</version>
-    <scope>compile</scope>
-</dependency>
-
 	</dependencies>
 
 
