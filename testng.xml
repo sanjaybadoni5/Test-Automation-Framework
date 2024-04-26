@@ -1,16 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Suite" parallel="tests" thread-count="2">
-    <test thread-count="5" name="Test 1">
+<suite name="Jenkins Maven Integration Tests" thread-count="5" parallel="tests">
+    <!-- Add the location where the project is stored in your machine -->
+    <test verbose="2" preserve-order="true" name="To Do App Test">
         <classes>
-            <class name="OrderCompleteTest"/>
+            <class name="org.selenium4.GoogleSearchTest"/>
         </classes>
     </test>
-
-    <test thread-count="5" name="Test 2">
+  <!--  <listeners>
+        <listener class-name="org.selenium4.GoogleSearchTest"/>
+    </listeners>
+ 
+    <test name="Google Search Test - 1">
+        <parameter name="browser" value="Chrome"/>
+        <parameter name="version" value="latest"/>
+        <parameter name="platform" value="Windows 10"/>
+        <parameter name="resolution" value="1600x1200"/>
         <classes>
-            <class name="AddRemoveItemBasketTest"/>
+            <class name="org.selenium4.GoogleSearchTest"/>
         </classes>
-
     </test>
+ 
+    <test name="Google Search Test - 2">
+        <parameter name="browser" value="MicrosoftEdge"/>
+        <parameter name="version" value="84.0"/>
+        <parameter name="platform" value="Windows 10"/>
+        <parameter name="resolution" value="1920x1080"/>
+        <classes>
+            <class name="org.selenium4.GoogleSearchTest"/>
+        </classes>
+    </test>
+ 
+    <test name="Google Search Test - 3">
+        <parameter name="browser" value="Chrome"/>
+        <parameter name="version" value="latest"/>
+        <parameter name="platform" value="macOS Mojave"/>
+        <parameter name="resolution" value="2048x1536"/>
+        <classes>
+            <class name="org.selenium4.GoogleSearchTest"/>
+        </classes>
+    </test>
+ 
+    <test name="Google Search Test - 4">
+        <parameter name="browser" value="Firefox"/>
+        <parameter name="version" value="latest"/>
+        <parameter name="platform" value="OS X Mavericks"/>
+        <parameter name="resolution" value="2560x1440"/>
+        <classes>
+            <class name="org.selenium4.GoogleSearchTest"/>
+        </classes>
+    </test>
+    --> 
 </suite>
