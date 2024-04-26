@@ -16,6 +16,11 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+         <properties>
+    <java.version>11</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+</properties>
 
   <dependencies>
     <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
@@ -85,6 +90,7 @@
       <artifactId>org.eclipse.persistence.moxy</artifactId>
       <version>3.0.0</version>
   </dependency>
+        
 
   </dependencies>
 </project>
