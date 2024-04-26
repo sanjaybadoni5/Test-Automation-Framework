@@ -1,41 +1,25 @@
-import base.BasePage;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
 import pageObjects.*;
+import base.Hooks;
 
 import java.io.IOException;
 import java.time.Duration;
 
 @Listeners(resources.Listeners.class)
 
-public class OrderCompleteTest extends BasePage {
+public class OrderCompleteTest extends Hooks {
     public OrderCompleteTest() throws IOException {
         super();
     }
 
-    @BeforeTest
-    public void setup() throws IOException {
-        driver = getDriver();
-        driver.get(getUrl());
-    }
-
-    @AfterTest
-    public void finishExecution(){
-        driver.close();
-        driver = null;
-    }
-
     @Test
     public void SimulateOrderingProcess() throws IOException, InterruptedException {
-        Homepage home = new Homepage(driver);
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        Homepage home = new Homepage();
 
         home.getCookie().click();
 
@@ -43,32 +27,34 @@ public class OrderCompleteTest extends BasePage {
             home.getToggle().click();
         }
 
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        JavascriptExecutor jse = (JavascriptExecutor) getDriver();
         jse.executeScript("arguments[0].scrollIntoView()", home.getTestStoreLink());
 
-        wait.until(ExpectedConditions.elementToBeClickable(home.getTestStoreLink()));
+        waitForClickabilityOf(home.getTestStoreLink(), Duration.ofSeconds(10));
         home.getTestStoreLink().click();
 
-        StoreHomepage store = new StoreHomepage(driver);
+        StoreHomepage store = new StoreHomepage();
         store.getProduct().click();
 
-        StoreProductPage storeProd = new StoreProductPage(driver);
+        StoreProductPage storeProd = new StoreProductPage();
         Select option = new Select(storeProd.getSizeOption());
         option.selectByVisibleText("M");
 
         storeProd.getQuantityIncreaseBtn().click();
         storeProd.getAddToCartBtn().click();
 
-        StoreContentPanel sPanel = new StoreContentPanel(driver);
+        StoreContentPanel sPanel = new StoreContentPanel();
+        waitForClickabilityOf(sPanel.getProceedToCheckoutBtn(), Duration.ofSeconds(10));
         sPanel.getProceedToCheckoutBtn().click();
 
-        ShoppingCart sCart = new ShoppingCart(driver);
+        ShoppingCart sCart = new ShoppingCart();
         sCart.getHavePromo().click();
         sCart.getPromoTextbox().sendKeys("20OFF");
         sCart.getAddPromoBtn().click();
+        waitForClickabilityOf(sCart.getProceedToCheckoutBtn(), Duration.ofSeconds(10));
         sCart.getProceedToCheckoutBtn().click();
 
-        OrderFormPersInfo pInfo = new OrderFormPersInfo(driver);
+        OrderFormPersInfo pInfo = new OrderFormPersInfo();
         pInfo.getGenderMale().click();
         pInfo.getFirstNameField().sendKeys("Patrick");
         pInfo.getLastnameField().sendKeys("Star");
@@ -76,7 +62,7 @@ public class OrderCompleteTest extends BasePage {
         pInfo.getTermsConditionsCheckbox().click();
         pInfo.getContinueBtn().click();
 
-        OrderFormDelivery dInfo = new OrderFormDelivery(driver);
+        OrderFormDelivery dInfo = new OrderFormDelivery();
         dInfo.getAddressField().sendKeys("Non-existing street");
         dInfo.getCityField().sendKeys("Test City");
         Select state = new Select(dInfo.getStateDropdown());
@@ -84,16 +70,16 @@ public class OrderCompleteTest extends BasePage {
         dInfo.getPostcodeField().sendKeys("76013");
         dInfo.getContinueBtn().click();
 
-        OrderFormShippingMethod shippingMethod = new OrderFormShippingMethod(driver);
+        OrderFormShippingMethod shippingMethod = new OrderFormShippingMethod();
         shippingMethod.getDeliveryMsgTextbox().sendKeys("Test comment");
         shippingMethod.getContinueBtn().click();
 
-        OrderFormPayment paymentForm = new OrderFormPayment(driver);
+        OrderFormPayment paymentForm = new OrderFormPayment();
         paymentForm.getPayByCheckRadioBtn().click();
         paymentForm.getTermsConditionsCheckbox().click();
         paymentForm.getOrderBtn().click();
 
-        OrderConfirm confirmPage = new OrderConfirm(driver);
+        OrderConfirm confirmPage = new OrderConfirm();
         Assert.assertEquals(sCart.getTotalAmountValue().getText(), confirmPage.getPaymentAmount().getText());
 
         System.out.println("OrderComplete test has been simulated successfully.");

@@ -1,14 +1,17 @@
 package pageObjects;
 
+import base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class StoreProductPage {
+import java.io.IOException;
+
+public class StoreProductPage extends BasePage {
     public WebDriver driver;
 
-    public StoreProductPage(WebDriver driver){
-        this.driver = driver;
+    public StoreProductPage() throws IOException {
+        super();
     }
 
     By sizeOption = By.cssSelector("[aria-label='Size']");
@@ -17,19 +20,24 @@ public class StoreProductPage {
     By addToCartBtn = By.cssSelector("[data-button-action]");
     By homepageLink = By.cssSelector("ol li:nth-of-type(1) span");
 
-    public WebElement getSizeOption(){
+    public WebElement getSizeOption() throws IOException {
+        this.driver = getDriver();
         return driver.findElement(sizeOption);
     }
-    public WebElement getQuantityIncreaseBtn(){
+    public WebElement getQuantityIncreaseBtn() throws IOException {
+        this.driver = getDriver();
         return driver.findElement(quantityIncreaseBtn);
     }
-    public WebElement getQuantityDecreaseBtn(){
+    public WebElement getQuantityDecreaseBtn() throws IOException {
+        this.driver = getDriver();
         return driver.findElement(quantityDecreaseBtn);
     }
-    public WebElement getAddToCartBtn(){
+    public WebElement getAddToCartBtn() throws IOException {
+        this.driver = getDriver();
         return driver.findElement(addToCartBtn);
     }
-    public WebElement getHomepageLink(){
+    public WebElement getHomepageLink() throws IOException {
+        this.driver = getDriver();
         return driver.findElement(homepageLink);
     }
 }

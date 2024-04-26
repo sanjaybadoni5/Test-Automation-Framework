@@ -4,9 +4,9 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,7 +17,6 @@ import java.util.Date;
 import java.util.Properties;
 
 public class BasePage {
-    public static WebDriver driver;
     private String url;
     private final Properties prop;
 
@@ -28,23 +27,8 @@ public class BasePage {
         prop.load(data);
     }
 
-    public WebDriver getDriver() throws IOException{
-        if (prop.getProperty("browser").equals("chrome")){
-            System.getProperty("webdriver.chrome.driver",
-                    System.getProperty("user.dir") + "\\src\\main\\java\\drivers\\chromedriver.exe");
-            driver = new ChromeDriver();
-        } else {
-            System.getProperty("webdriver.edge.driver",
-                    System.getProperty("user.dir") + "\\src\\main\\java\\drivers\\msedgedriver.exe");
-            EdgeOptions options = new EdgeOptions();
-            options.addArguments("--inprivate");
-            driver = new EdgeDriver(options);
-        }
-
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-        return driver;
+    public static WebDriver getDriver() throws IOException{
+        return WebDriverInstance.getDriver();
     }
 
     public String getUrl() throws IOException{
@@ -53,7 +37,7 @@ public class BasePage {
     }
 
     public void takeScreenShot(String name) throws IOException{
-        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        File srcFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
 
         File destFile = new File(System.getProperty("user.dir") + "\\target\\screenshots\\" + timestamp() + ".png");
 
@@ -62,5 +46,19 @@ public class BasePage {
 
     public String timestamp(){
         return new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date());
+    }
+
+    // Waits
+    public static void waitForClickabilityOf(WebElement element, Duration timer) throws IOException {
+        WebDriverWait wait = new WebDriverWait(getDriver(), timer);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+    public static void waitForInvisibilityOf(WebElement element, Duration timer) throws IOException {
+        WebDriverWait wait = new WebDriverWait(getDriver(), timer);
+        wait.until(ExpectedConditions.invisibilityOf(element));
+    }
+    public static void waitForStalenessOf(WebElement element, Duration timer) throws IOException {
+        WebDriverWait wait = new WebDriverWait(getDriver(), timer);
+        wait.until(ExpectedConditions.stalenessOf(element));
     }
 }

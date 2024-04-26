@@ -2,42 +2,25 @@ import java.io.IOException;
 import java.time.Duration;
 
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import base.BasePage;
+import base.Hooks;
 import pageObjects.*;
 
 @Listeners(resources.Listeners.class)
 
-public class AddRemoveItemBasketTest extends BasePage{
+public class AddRemoveItemBasketTest extends Hooks {
 
     public AddRemoveItemBasketTest() throws IOException {
         super();
     }
 
-    @BeforeTest
-    public void setup() throws IOException {
-        driver = getDriver();
-        driver.get(getUrl());
-    }
-
-    @AfterTest
-    public void tearDown() {
-        driver.close();
-        driver = null;
-    }
-
     @Test
     public void addRemoveItem() throws IOException, InterruptedException {
-        Homepage home = new Homepage(driver);
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        Homepage home = new Homepage();
 
         home.getCookie().click();
 
@@ -45,33 +28,33 @@ public class AddRemoveItemBasketTest extends BasePage{
             home.getToggle().click();
         }
 
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        JavascriptExecutor jse = (JavascriptExecutor) getDriver();
         jse.executeScript("arguments[0].scrollIntoView()", home.getTestStoreLink());
 
-        wait.until(ExpectedConditions.elementToBeClickable(home.getTestStoreLink()));
+        waitForClickabilityOf(home.getTestStoreLink(), Duration.ofSeconds(10));
         home.getTestStoreLink().click();
 
-        StoreHomepage storeHome = new StoreHomepage(driver);
+        StoreHomepage storeHome = new StoreHomepage();
         storeHome.getProduct().click();
 
-        StoreProductPage productPage = new StoreProductPage(driver);
+        StoreProductPage productPage = new StoreProductPage();
         productPage.getQuantityIncreaseBtn().click();
         productPage.getAddToCartBtn().click();
 
-        StoreContentPanel contentPanel = new StoreContentPanel(driver);
+        StoreContentPanel contentPanel = new StoreContentPanel();
         contentPanel.getContinueShoppingBtn().click();
 
         Select option = new Select(productPage.getSizeOption());
         option.selectByVisibleText("XL");
-        wait.until(ExpectedConditions.elementToBeClickable(productPage.getAddToCartBtn()));
+        waitForClickabilityOf(productPage.getAddToCartBtn(), Duration.ofSeconds(10));
         productPage.getAddToCartBtn().click();
 
-        wait.until(ExpectedConditions.stalenessOf(contentPanel.getProceedToCheckoutBtn()));
+        waitForStalenessOf(contentPanel.getProceedToCheckoutBtn(), Duration.ofSeconds(10));
         contentPanel.getProceedToCheckoutBtn().click();
 
-        ShoppingCart sCart = new ShoppingCart(driver);
+        ShoppingCart sCart = new ShoppingCart();
         sCart.getRemoveItemBtn(2).click();
-        wait.until(ExpectedConditions.invisibilityOf(sCart.getRemoveItemBtn(2)));
+        waitForInvisibilityOf(sCart.getRemoveItemBtn(2), Duration.ofSeconds(10));
 
         Assert.assertEquals(sCart.getTotalAmountValue().getText(), "$45.24");
 
