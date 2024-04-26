@@ -1,14 +1,17 @@
 package pageObjects;
 
+import base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class ShoppingCart {
+import java.io.IOException;
+
+public class ShoppingCart extends BasePage {
     public WebDriver driver;
 
-    public ShoppingCart(WebDriver driver){
-        this.driver = driver;
+    public ShoppingCart() throws IOException {
+        super();
     }
 
     By havePromo = By.linkText("Have a promo code?");
@@ -21,29 +24,39 @@ public class ShoppingCart {
     By totalAmountVal = By.cssSelector(".cart-total .value");
     String removeItemBtn = "(//a[@class='remove-from-cart'])[%d]";
 
-    public WebElement getHavePromo(){
+    public WebElement getHavePromo() throws IOException {
+        this.driver = getDriver();
         return driver.findElement(havePromo);
     }
-    public WebElement getPromoTextbox(){
+    public WebElement getPromoTextbox() throws IOException {
+        this.driver = getDriver();
         return driver.findElement(promoTextbox);
     }
-    public WebElement getAddPromoBtn(){
+    public WebElement getAddPromoBtn() throws IOException {
+        this.driver = getDriver();
         return driver.findElement(addPromoBtn);
     }
-    public WebElement getClosePromo(){
+    public WebElement getClosePromo() throws IOException {
+        this.driver = getDriver();
         return driver.findElement(closePromo);
     }
-    public WebElement getProceedToCheckoutBtn(){
+    public WebElement getProceedToCheckoutBtn() throws IOException {
+        this.driver = getDriver();
         return driver.findElement(proceedToCheckoutBtn);
     }
-    public WebElement getQuantityIncreaseBtn(){
+    public WebElement getQuantityIncreaseBtn() throws IOException {
+        this.driver = getDriver();
         return driver.findElement(quantityIncreaseBtn);
     }
-    public WebElement getQuantityDecreaseBtn(){
+    public WebElement getQuantityDecreaseBtn() throws IOException {
+        this.driver = getDriver();
         return driver.findElement(quantityDecreaseBtn);
     }
-    public WebElement getTotalAmountValue() { return driver.findElement(totalAmountVal); }
-    public WebElement getRemoveItemBtn(int itemNumber) {
+    public WebElement getTotalAmountValue() throws IOException {
+        this.driver = getDriver();
+        return driver.findElement(totalAmountVal); }
+    public WebElement getRemoveItemBtn(int itemNumber) throws IOException {
+        this.driver = getDriver();
         String xpathExpression = String.format(removeItemBtn, itemNumber);
         return driver.findElement(By.xpath(xpathExpression));
     }
